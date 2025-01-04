@@ -1,5 +1,5 @@
 local defaultSessionTimerConfiguration = {
-    sessionTimeSeconds = 60,
+    sessionTimeSeconds = 1800,
     showSessionEndWindow = true,
     onSessionStart = function() end,
     onSessionEnd = function() end,
@@ -8,19 +8,19 @@ local defaultSessionTimerConfiguration = {
         {
             secondsBeforeSessionTimerEnds = 3,
             hook = function()
-                print("Session will end in 3 seconds")
+                vim.notify("Session will end in 3 seconds")
             end
         },
         {
             secondsBeforeSessionTimerEnds = 2,
             hook = function()
-                print("Session will end in 2 seconds")
+                vim.notify("Session will end in 2 seconds")
             end
         },
         {
             secondsBeforeSessionTimerEnds = 1,
             hook = function()
-                print("Session will end in 1 second")
+                vim.notify("Session will end in 1 second")
             end
         }
     }

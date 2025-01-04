@@ -37,13 +37,13 @@ return {
                 sessionTimeSeconds = 2700, -- 45 minutes
                 showSessionEndWindow = true,
                 onSessionStart = function()
-                    require("notify")("Session started", "info")
+                    require("notify")("Session started", "info", { timeout = 1000 })
                     -- if you dont use notify:
                     -- vim.notify("Session started")
                 end,
                 onSessionEnd = function() end,
                 onSessionKill = function()
-                    require("notify")("Session killed", "info")
+                    require("notify")("Session killed", "info"), { timeout = 1000 })
                     -- if you dont use notify:
                     -- vim.notify("Session killed")
                 end,
