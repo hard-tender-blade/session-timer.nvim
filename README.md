@@ -38,16 +38,22 @@ return {
                 showSessionEndWindow = true,
                 onSessionStart = function()
                     require("notify")("Session started", "info")
+                    -- if you dont use notify:
+                    -- vim.notify("Session started")
                 end,
                 onSessionEnd = function() end,
                 onSessionKill = function()
                     require("notify")("Session killed", "info")
+                    -- if you dont use notify:
+                    -- vim.notify("Session killed")
                 end,
                 events = {
                     {
                         secondsBeforeSessionTimerEnds = 600, -- 10 minutes
                         hook = function()
                             require("notify")("Ending session in 10m", "info")
+                            -- if you dont use notify:
+                            -- vim.notify("Ending session in 10m")
                         end
                     },
                     {
@@ -84,7 +90,7 @@ return {
 ## Commands
 
 There are also three commands you can use to control the plugin:
-- `:STSessionStart` – Starts the session.
+- `:STSessionStart` – Starts the session (will automatically kill the previous timer).
 - `:STSessionKill` – Kills the session.
 - `:STSessionTimeLeft` – Displays the time remaining in the current session.
 
