@@ -28,7 +28,7 @@ Here’s a configuration I prefer. I use `notify` to receive notifications. I wo
 ```lua
 return {
     {
-        dir = "hard-tender-blade/session-timer.nvim",
+        "hard-tender-blade/session-timer.nvim",
         dependencies = {
             "rcarriga/nvim-notify",
         },
