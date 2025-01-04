@@ -28,7 +28,7 @@ local defaultSessionTimerConfiguration = {
 local function create_floating_window(opts)
     opts = opts or {}
     local width = 37
-    local height = 1
+    local height = 3
 
     -- Calculate the position to the center of the window
     local row = math.floor((vim.o.lines - height) / 2)
@@ -67,10 +67,17 @@ local function create_floating_window(opts)
     }
 end
 
+local convertSeondsToHumanReadable = function(seconds)
+    local minutes = math.floor(seconds / 60)
+    local remainingSeconds = seconds % 60
+    return minutes .. "m " .. remainingSeconds .. "s"
+end
+
 local M = {}
 
-M.timer = nil      -- Reference to the active timer
-M.eventTimers = {} -- Reference to the active event timers
+M.timer = nil
+M.eventTimers = {}
+M.sessionStartTimestamp = nil
 M.opts = defaultSessionTimerConfiguration
 
 M.setup = function(opts)
@@ -88,14 +95,14 @@ end
 
 M.cleanTimer = function()
     if M.timer then
-        M.timer:stop()  -- Stop the timer
-        M.timer:close() -- Clean up resources
+        M.timer:stop()
+        M.timer:close()
         M.timer = nil
     end
     if #M.eventTimers > 0 then
         for _, eventTimer in ipairs(M.eventTimers) do
-            eventTimer:stop()  -- Stop the timer
-            eventTimer:close() -- Clean up resources
+            eventTimer:stop()
+            eventTimer:close()
         end
         M.eventTimers = {}
     end
@@ -105,7 +112,9 @@ end
 M.showSessionEndWindow = function()
     local floating_win = create_floating_window()
     vim.api.nvim_buf_set_lines(floating_win.buf, 0, -1, false, {
-        "█        Let’s take a break..        "
+        "                                     ",
+        "█        Let’s take a break..        ",
+        "                                     ",
     })
 end
 
@@ -127,6 +136,7 @@ M.startSession = function()
             end
         end)
     )
+    M.sessionStartTimestamp = os.time()
 
     --- Remove events that have a greater time than the session time
     local validEvents = {}
@@ -157,11 +167,21 @@ M.killSession = function()
 end
 
 
-vim.api.nvim_create_user_command("STStartSession", function()
+vim.api.nvim_create_user_command("SessionStart", function()
     M.startSession()
 end, {})
 
-vim.api.nvim_create_user_command("STKillSession", function()
+vim.api.nvim_create_user_command("SessionKill", function()
     M.killSession()
 end, {})
+
+vim.api.nvim_create_user_command("SessionTimeLeft", function()
+    if M.sessionStartTimestamp then
+        local timeLeft = M.opts.sessionTimeSeconds - (os.time() - M.sessionStartTimestamp)
+        vim.notify("Time left: " .. convertSeondsToHumanReadable(timeLeft))
+    else
+        vim.notify("No session is running")
+    end
+end, {})
+
 return M
