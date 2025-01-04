@@ -84,16 +84,16 @@ return {
 ## Commands
 
 There are also three commands you can use to control the plugin:
-- `:SessionStart` – Starts the session.
-- `:SessionKill` – Kills the session.
-- `:SessionTimeLeft` – Displays the time remaining in the current session.
+- `:STSessionStart` – Starts the session.
+- `:STSessionKill` – Kills the session.
+- `:STSessionTimeLeft` – Displays the time remaining in the current session.
 
 You can bind these commands to keys like so:
 
 ```lua
-vim.api.nvim_set_keymap("n", "<leader>ss", ":SessionStart<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>sk", ":SessionKill<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>sl", ":SessionTimeLeft<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>ss", ":STSessionStart<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>sk", ":STSessionKill<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>sl", ":STSessionTimeLeft<CR>", { noremap = true, silent = true })
 ```
 
 ## TODO

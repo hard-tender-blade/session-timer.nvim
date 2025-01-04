@@ -167,15 +167,15 @@ M.killSession = function()
 end
 
 
-vim.api.nvim_create_user_command("SessionStart", function()
+vim.api.nvim_create_user_command("STSessionStart", function()
     M.startSession()
 end, {})
 
-vim.api.nvim_create_user_command("SessionKill", function()
+vim.api.nvim_create_user_command("STSessionKill", function()
     M.killSession()
 end, {})
 
-vim.api.nvim_create_user_command("SessionTimeLeft", function()
+vim.api.nvim_create_user_command("STSessionTimeLeft", function()
     if M.sessionStartTimestamp then
         local timeLeft = M.opts.sessionTimeSeconds - (os.time() - M.sessionStartTimestamp)
         vim.notify("Time left: " .. convertSeondsToHumanReadable(timeLeft))
